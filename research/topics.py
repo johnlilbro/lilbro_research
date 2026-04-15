@@ -1,0 +1,17 @@
+TOPICS = [
+    "agents",
+    "evals",
+    "retrieval",
+    "reasoning",
+    "multimodal",
+    "alignment",
+    "inference",
+    "embeddings",
+    "distillation",
+    "tooling",
+    "orchestration",
+    "memory",
+    "vectorsearch",
+    "finetuning",
+    "simulation",
+]

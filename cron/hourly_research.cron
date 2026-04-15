@@ -1,0 +1,2 @@
+# Run one research cycle every hour; script stops itself after 6 cycles
+0 * * * * cd /home/john/sample_code/lilbro_research && /usr/bin/python3 scripts/run_hourly_research.py >> /home/john/sample_code/lilbro_research/cron.log 2>&1
