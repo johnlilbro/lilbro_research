@@ -2,8 +2,10 @@ from __future__ import annotations
 
 import random
 import subprocess
+from datetime import datetime, timezone
 from pathlib import Path
 
+from research.notify import write_notification
 from research.search import multi_search
 from research.state import load_state, save_state
 from research.topics import TOPICS
@@ -72,6 +74,10 @@ def run(cmd: list[str]):
     subprocess.run(cmd, cwd=BASE_DIR, check=True)
 
 
+def ts_slug() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H-%M-%SZ")
+
+
 def main():
     state = load_state()
     if state.get("completed_cycles", 0) >= MAX_CYCLES:
@@ -105,7 +111,22 @@ def main():
     (BASE_DIR / "IDEAS.md").write_text(ideas_markdown(topic, idea_items))
     (BASE_DIR / "SUMMARIES.md").write_text(summaries_markdown(topic, paper_items))
 
-    run(["git", "add", "IDEAS.md", "SUMMARIES.md"])
+    timestamp = ts_slug()
+    note = "\n".join([
+        "# Research Cycle Complete",
+        "",
+        f"Topic: {topic}",
+        f"Branch: {branch}",
+        f"Cycle: {state.get('completed_cycles', 0) + 1}",
+        f"Timestamp: {timestamp}",
+        "",
+        "Generated files:",
+        "- IDEAS.md",
+        "- SUMMARIES.md",
+    ])
+    write_notification(timestamp, note)
+
+    run(["git", "add", "IDEAS.md", "SUMMARIES.md", "notifications"])
     run(["git", "commit", "-m", f"Add research notes for topic: {topic}"])
     run(["git", "push", "-u", "origin", branch])
     run(["git", "checkout", "main"])

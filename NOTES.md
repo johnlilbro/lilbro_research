@@ -11,12 +11,14 @@
 
 - `IDEAS.md`
 - `SUMMARIES.md`
+- notification-ready completion file in `notifications/`
 
 ## Current retrieval behavior
 
 - uses multiple search queries per topic
 - adds fallback content if live search results are weak or empty
 - writes debug messages into `cron.log`
+- writes a notification-ready completion note after a successful cycle
 
 ## Future improvements
 
@@ -24,3 +26,4 @@
 - richer summaries
 - better conference/paper extraction
 - stronger retry / denial handling
+- real OpenClaw-driven messaging on cycle completion
