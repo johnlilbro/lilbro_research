@@ -12,6 +12,12 @@
 - `IDEAS.md`
 - `SUMMARIES.md`
 
+## Current retrieval behavior
+
+- uses multiple search queries per topic
+- adds fallback content if live search results are weak or empty
+- writes debug messages into `cron.log`
+
 ## Future improvements
 
 - smarter topic selection
